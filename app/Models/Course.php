@@ -12,4 +12,9 @@ class Course extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    // Creación de campos virtuales (Campos que no existen en la BD)
+    public function getExcerptAttribute() {
+        return substr($this->description, 0, 80) . "...";
+    }
 }
