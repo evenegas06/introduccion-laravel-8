@@ -13,8 +13,19 @@ class Course extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
     // Creación de campos virtuales (Campos que no existen en la BD)
     public function getExcerptAttribute() {
         return substr($this->description, 0, 80) . "...";
+    }
+
+    public function similar() {
+        return $this->where('category_id', $this->category_id)
+            ->with('user')
+            ->take(2)
+            ->get();
     }
 }
